@@ -1,0 +1,188 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Main Section */
+main {
+    padding: 2rem;
+    text-align: center;
+    flex: 1;
+}
+
+section {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background-color: rgba(249, 249, 249, 0.5);
+    border-radius: 8px;
+}
+
+h2, h3 {
+    color: #333;
+}
+
+/* Portfolio Page Styles */
+.portfolio-section {
+    padding: 2rem;
+    background-color: rgba(249, 249, 249, 0.5);
+    text-align: center;
+}
+
+.portfolio-section h2 {
+    color: #333;
+}
+
+.portfolio-item {
+    display: inline-block;
+    width: 30%;
+    margin: 1rem;
+    text-align: left;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #fff;
+}
+
+.portfolio-item img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.portfolio-item h3 {
+    color: #333;
+}
+
+.portfolio-item p {
+    color: #666;
+}
+
+/* Blog Links Section */
+.blog-links {
+    padding: 1.5rem;
+    background-color: #f0f8ff;
+    border: 1px solid #cce7ff;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.blog-links h2 {
+    color: #007BFF;
+}
+
+.blog-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.blog-links li {
+    margin-bottom: 0.5rem;
+}
+
+.blog-links li a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.blog-links li a:hover {
+    text-decoration: underline;
+}
+
+/* Video Section */
+.video-section {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.video-section h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.video-section video {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Background Images */
+.home-page {
+    background-image: url('images/Modern_Abstract_Background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.about-page {
+    background-image: url('images/Calm_Forest.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.services-page {
+    background-image: url('images/Sleek_Modern_Office.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.portfolio-page {
+    background-image: url('images/Futuristic_Tech_Interface.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.contact-page {
+    background-image: url('images/Subtle_Texture_Overlay.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
