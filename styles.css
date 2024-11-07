@@ -65,13 +65,14 @@ h2, h3 {
 
 .portfolio-item {
     display: inline-block;
-    width: 30%;
+    width: 70%;
     margin: 1rem;
-    text-align: left;
+    text-align: center;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 1rem;
     background-color: #fff;
+    text color: white;
 }
 
 .portfolio-item img {
