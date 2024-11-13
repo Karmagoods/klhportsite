@@ -187,3 +187,46 @@ footer {
     background-position: center;
     background-repeat: no-repeat;
 }
+/* Ad Images Section */
+.ad-images {
+    display: flex; /* Flexbox to arrange images side by side */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: center; /* Center the images */
+    gap: 20px; /* Space between images */
+    margin-bottom: 2rem;
+}
+
+.ad-image {
+    flex: 1 1 45%; /* Make each image take up 45% of the width (adjust as needed) */
+    max-width: 45%; /* Ensure images don't exceed 45% of container width */
+    text-align: center; /* Center the text under the image */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ad-image img {
+    width: 100%; /* Make image fill its container */
+    height: auto;
+    border-radius: 8px;
+}
+
+.ad-image p {
+    margin-top: 10px;
+    color: #333; /* Ensure text stands out */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 768px) {
+    .ad-image {
+        flex: 1 1 100%; /* Each image takes up full width on mobile */
+        max-width: 100%; /* Prevent images from exceeding full width */
+    }
+    
+    .ad-images {
+        justify-content: center; /* Ensure images stay centered on small screens */
+    }
+}
