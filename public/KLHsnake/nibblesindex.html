@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NIBBLES — KLH Edition</title>
+  <link rel="stylesheet" href="nibblesstyles.css" />
+</head>
+<body>
+  <div class="crt">
+    <header class="topbar">
+      <div class="brand">NIBBLES.EXE</div>
+      <div class="status">
+        <span id="statusText">READY</span>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- Side Panel -->
+      <aside class="panel">
+        <div class="panel-section">
+          <div class="label">LEVEL</div>
+          <div class="value"><span id="level">1</span> / <span id="levelCount">10</span></div>
+        </div>
+        <button class="panel-toggle" id="panelToggle">Show Controls</button>
+
+        <div class="panel-section">
+          <div class="label">SCORE</div>
+          <div class="value" id="score">0000</div>
+        </div>
+        <div class="panel-section">
+          <div class="label">HI-SCORE</div>
+          <div class="value" id="hiScore">0000</div>
+        </div>
+        <div class="panel-section">
+          <div class="label">LIVES</div>
+          <div class="lives" id="lives"></div>
+        </div>
+        <div class="panel-section small">
+          <div class="label">CONTROLS</div>
+          <ul class="help">
+            <li>Arrows = Move</li>
+            <li>P = Pause/Resume</li>
+            <li>R = Reset</li>
+            <li>Enter/Space = Start</li>
+          </ul>
+        </div>
+        <div class="panel-section small">
+          <div class="label">AUDIO</div>
+          <label class="toggle">
+            <input type="checkbox" id="soundToggle" checked />
+            <span>Beep</span>
+          </label>
+        </div>
+        <div class="panel-section actions">
+          <button id="btnStart">Start</button>
+          <button id="btnPause">Pause</button>
+          <button id="btnReset">Reset</button>
+        </div>
+      </aside>
+
+      <!-- Game Stage -->
+      <section class="stage">
+        <div class="canvas-wrapper">
+          <canvas id="game" width="640" height="480"></canvas>
+        </div>
+
+        <!-- Overlay -->
+        <div id="overlay" class="overlay hidden">
+          <div class="modal">
+            <h1>N I B B L E S</h1>
+            <p>Eat the pellets, avoid walls and yourself.</p>
+            <p>Clear the quota to advance levels. Good luck.</p>
+            <div class="meta">
+              <span>© 2025 KLH • Inspired by MS-DOS Nibbles</span>
+            </div>
+            <div class="modal-actions">
+              <button id="btnOverlayStart" type="button">Press Start (Enter)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Buttons -->
+        <div class="mobile-buttons">
+          <button id="btnUp">↑</button>
+          <button id="btnDown">↓</button>
+          <button id="btnLeft">←</button>
+          <button id="btnRight">→</button>
+          <button id="btnPauseMobile">❚❚</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Fullscreen Button -->
+    <button id="btnFullscreen">Fullscreen</button>
+
+    <footer class="foot">
+      <span>VIDEO: EGA 640×480 • GRID: 40×30 • TICK varies by level</span>
+    </footer>
+  </div>
+
+  <script src="nibbles.js"></script>
+</body>
+</html>

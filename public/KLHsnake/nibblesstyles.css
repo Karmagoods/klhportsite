@@ -1,0 +1,268 @@
+/* Base layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: black;
+  color: lime;
+  font-family: monospace;
+  overflow: hidden; /* prevent scrollbars */
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.crt {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+}
+
+.topbar, .foot {
+  background: #111;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  flex: 0 0 auto;
+}
+
+.wrap {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0; /* allow proper shrinking */
+  overflow: hidden;
+}
+
+/* Side panel */
+.panel {
+  width: 220px;
+  background: #111;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow-y: auto;
+}
+
+.panel-section {
+  margin-bottom: 1rem;
+}
+.panel-section .label {
+  font-size: 0.8rem;
+  color: #0f0;
+  margin-bottom: 0.2rem;
+}
+.panel-section .value {
+  font-size: 1.2rem;
+}
+.panel-section.small {
+  font-size: 0.75rem;
+}
+.help {
+  margin: 0;
+  padding-left: 1rem;
+}
+.actions button {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  background: black;
+  color: lime;
+  border: 1px solid lime;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+.actions button:hover {
+  background: lime;
+  color: black;
+}
+
+/* Stage + canvas */
+.stage {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  padding: 0.5rem;
+  min-height: 0; /* prevent overflow cutoff */
+}
+
+.canvas-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-height: calc(100vh - 100px); /* leaves room for topbar/footer */
+}
+
+#game {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  aspect-ratio: 4 / 3;
+  image-rendering: pixelated;
+  border: 2px solid lime;
+  object-fit: contain;
+}
+
+/* Mobile Buttons */
+.mobile-buttons {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  z-index: 10;
+}
+
+.mobile-buttons button {
+  width: 48px;
+  height: 48px;
+  background: black;
+  border: 1px solid lime;
+  color: lime;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.mobile-buttons button:hover {
+  background: lime;
+  color: black;
+}
+
+/* Fullscreen mode */
+.fullscreen .wrap {
+  flex-direction: column;
+}
+.fullscreen .panel,
+.fullscreen .topbar,
+.fullscreen .foot {
+  display: none;
+}
+.fullscreen .stage {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+.fullscreen #game {
+  width: 100vw;
+  height: 100vh;
+  border: none;
+}
+
+/* Overlay modal */
+.overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  color: lime;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay.hidden { display: none; }
+.modal {
+  text-align: center;
+  padding: 2rem;
+  border: 2px solid lime;
+}
+.modal-actions button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: black;
+  border: 1px solid lime;
+  color: lime;
+  cursor: pointer;
+}
+.modal-actions button:hover {
+  background: lime;
+  color: black;
+}
+
+/* ---------- Responsive layout for small screens ---------- */
+@media (max-width: 768px) {
+  .wrap {
+    flex-direction: column; /* stack panel above canvas */
+  }
+
+  /* Collapsible panel */
+  .panel {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    max-height: 0; /* hidden by default */
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .panel.open {
+    max-height: 400px; /* enough space when expanded */
+    opacity: 1;
+  }
+
+  /* Toggle button */
+  .panel-toggle {
+    background: #111;
+    color: lime;
+    border: 1px solid lime;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 0.3rem;
+    width: fit-content;
+  }
+  .panel-toggle:hover {
+    background: lime;
+    color: black;
+  }
+
+  .panel-section {
+    margin: 0.3rem 0.5rem;
+  }
+
+  .actions button {
+    font-size: 0.7rem;
+    padding: 0.3rem;
+    margin: 0.2rem;
+  }
+
+  .stage {
+    flex: 1;
+    min-height: 65vh; /* canvas takes priority */
+  }
+
+  .canvas-wrapper {
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: 80vh; /* limits on small screens */
+  }
+
+  /* Mobile buttons bigger and spaced for touch */
+  .mobile-buttons button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+  }
+}
