@@ -128,8 +128,17 @@ header {
   margin-bottom: 2rem;
 }
 
+/* HERO CTAs */
+.hero-ctas {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;  /* Allow buttons to wrap to next line on small screens */
+  gap: 1rem;        /* Space between buttons */
+  margin-top: 1.5rem;
+}
+
 .hero-ctas a {
-  margin: 0 0.5rem;
+  margin: 0; /* remove horizontal margins from individual buttons */
 }
 
 .btn-primary {
