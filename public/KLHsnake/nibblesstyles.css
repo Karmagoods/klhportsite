@@ -118,32 +118,85 @@ body {
   object-fit: contain;
 }
 
-/* Mobile Buttons */
+/* ---------- Mobile D-Pad Controls ---------- */
 .mobile-buttons {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
+  width: 200px;   /* container width for D-pad */
+  height: 200px;  /* container height for D-pad */
+  pointer-events: none; /* allow individual buttons to receive clicks */
   z-index: 10;
 }
 
 .mobile-buttons button {
-  width: 48px;
-  height: 48px;
+  position: absolute;
+  width: 50px;
+  height: 50px;
   background: black;
   border: 1px solid lime;
   color: lime;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 4px;
+  pointer-events: auto; /* enable clicks */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
 }
-.mobile-buttons button:hover {
+
+/* Classic D-pad positions */
+#up {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#down {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Optional pause button */
+#pause {
+  right: 0;
+  bottom: 0;
+}
+
+/* Hover / active effects */
+.mobile-buttons button:hover,
+.mobile-buttons button:active {
   background: lime;
   color: black;
+}
+
+/* Adjust for smaller screens */
+@media (max-width: 480px) {
+  .mobile-buttons {
+    width: 160px;
+    height: 160px;
+  }
+
+  .mobile-buttons button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
 }
 
 /* Fullscreen mode */
