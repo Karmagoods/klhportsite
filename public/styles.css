@@ -549,3 +549,30 @@ footer {
   margin-top: 0.5rem;
   text-align: center;
 }
+/* AI Playground specific tweaks */
+#playground {
+    background: #f4f7fd;  /* subtle light-blue background */
+    padding: 80px 0;
+}
+
+#playground .software-card {
+    border: 2px dashed #0b3d91;  /* highlights AI/demo nature */
+    background: #ffffff;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+#playground .software-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+    border-color: #0f4fbf;
+}
+
+#playground .software-card h3 {
+    color: #0b3d91;
+}
+
+#playground .btn-primary {
+    background-color: #0b3d91;
+    color: white;
+    margin-top: 12px;
+}
