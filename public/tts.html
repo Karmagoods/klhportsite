@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Voice Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="./tts.css" />
+  <style>
+    .slider-container { margin: 0.5rem 0; }
+    .slider-label { font-size: 0.85rem; margin-bottom: 0.25rem; display: block; }
+    .slider { width: 100%; }
+    .tts-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+    .tts-btn { flex: 1 1 auto; }
+    .engine-container { margin-top: 1.25rem; padding: 1rem; border-radius: 10px; background: rgba(15,23,42,0.6); border:1px solid #1e293b;}
+    .engine-container h3 { margin-top:0; margin-bottom:0.25rem; font-size:1rem; }
+    .engine-container p { font-size:0.85rem; opacity:0.9; margin-bottom:0.75rem; }
+    .recorder-container { margin-top:1.5rem; border-top:1px solid #1e293b; padding-top:1rem;}
+    .recorder-container button { margin-right:0.5rem; margin-bottom:0.5rem; }
+  </style>
+</head>
+<body>
+
+<div class="tts-container">
+  <div class="tts-back">
+    <a href="index.html" class="tts-btn secondary" style="margin-bottom:1rem; display:inline-block;">← Back to Main</a>
+  </div>
+
+  <div class="tts-header">
+    <h2>AI Voice Playground</h2>
+    <p>Adjust engine, voice, language, rate, pitch, and style — hear changes live!</p>
+  </div>
+
+  <textarea id="text" class="tts-textarea" placeholder="Type something to hear it spoken…"></textarea>
+
+  <!-- Engine selector -->
+  <select id="engineSelect" class="tts-textarea">
+    <option value="browser">Browser Voice (Web Speech API)</option>
+    <option value="cloud">Google Cloud TTS (Standard Voices)</option>
+  </select>
+
+  <!-- Voice selector -->
+  <select id="voiceSelect" class="tts-textarea">
+    <option value="">Auto (Best Match)</option>
+  </select>
+
+  <!-- Language selector -->
+  <select id="langSelect" class="tts-textarea">
+    <option value="en-US">English (US)</option>
+    <option value="en-GB">English (UK)</option>
+    <option value="es-ES">Spanish (Spain)</option>
+    <option value="fr-FR">French</option>
+    <!-- Add more standard voices as needed -->
+  </select>
+
+  <!-- Voice style -->
+  <select id="styleSelect" class="tts-textarea">
+    <option value="normal">Normal</option>
+    <option value="calm">Calm</option>
+    <option value="excited">Excited</option>
+    <option value="deep">Deep</option>
+  </select>
+
+  <div class="slider-container">
+    <label class="slider-label" for="rateSlider">Rate: <span id="rateVal">1</span></label>
+    <input type="range" id="rateSlider" class="slider" min="0.5" max="2" step="0.05" value="1">
+  </div>
+
+  <div class="slider-container">
+    <label class="slider-label" for="pitchSlider">Pitch: <span id="pitchVal">1</span></label>
+    <input type="range" id="pitchSlider" class="slider" min="0" max="2" step="0.05" value="1">
+  </div>
+
+  <div class="tts-controls">
+    <button id="speakBtn" class="tts-btn primary">Speak</button>
+    <button id="stopBtn" class="tts-btn secondary">Stop</button>
+    <button id="sampleBtn" class="tts-btn secondary">Try Sample</button>
+  </div>
+
+  <div class="engine-container">
+    <h3>Voice Engines</h3>
+    <p>Browser voices are instant & private. Cloud TTS offers high-quality standard voices via Google Cloud.</p>
+  </div>
+</div>
+
+<script type="module">
+  import { speak, speakCloud, speakAuto, stop, getVoices, waitForVoices, getStyleSettings } from './tts.js';
+
+  const textInput = document.getElementById('text');
+  const engineSelect = document.getElementById('engineSelect');
+  const voiceSelect = document.getElementById('voiceSelect');
+  const langSelect = document.getElementById('langSelect');
+  const styleSelect = document.getElementById('styleSelect');
+  const rateSlider = document.getElementById('rateSlider');
+  const pitchSlider = document.getElementById('pitchSlider');
+  const rateVal = document.getElementById('rateVal');
+  const pitchVal = document.getElementById('pitchVal');
+  const speakBtn = document.getElementById('speakBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const sampleBtn = document.getElementById('sampleBtn');
+
+  async function initVoices() {
+    await waitForVoices();
+    const voices = getVoices();
+    voiceSelect.innerHTML = '<option value="">Auto (Best Match)</option>';
+    voices.forEach(v => {
+      const option = document.createElement('option');
+      option.value = v.name;
+      option.textContent = `${v.name} (${v.lang})`;
+      voiceSelect.appendChild(option);
+    });
+  }
+  initVoices();
+
+  // Slider updates
+  rateSlider.addEventListener('input', () => rateVal.textContent = rateSlider.value);
+  pitchSlider.addEventListener('input', () => pitchVal.textContent = pitchSlider.value);
+
+  // Speak button
+  speakBtn.addEventListener('click', () => {
+    const text = textInput.value.trim();
+    if (!text) return;
+    const style = getStyleSettings(styleSelect.value);
+    const rate = parseFloat(rateSlider.value) * style.rate;
+    const pitch = parseFloat(pitchSlider.value) * style.pitch;
+
+    if (engineSelect.value === 'cloud') {
+      speakCloud(text, {
+        voice: voiceSelect.value || undefined,
+        rate,
+        pitch,
+        onStart: () => speakBtn.disabled = true,
+        onEnd: () => speakBtn.disabled = false,
+        fallbackToBrowser: true
+      });
+    } else {
+      speak(text, {
+        voiceName: voiceSelect.value || undefined,
+        rate,
+        pitch,
+        onStart: () => speakBtn.disabled = true,
+        onEnd: () => speakBtn.disabled = false
+      });
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    stop();
+    speakBtn.disabled = false;
+  });
+
+  sampleBtn.addEventListener('click', () => {
+    textInput.value = "Welcome to the AI Voice Playground! Adjust engine, voice, language, and style to hear live changes.";
+  });
+</script>
+
+</body>
+</html>

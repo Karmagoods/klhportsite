@@ -6,12 +6,28 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "cleanUrls": true,
     "rewrites": [
+      {
+        "source": "/api/runGeminiDetection",
+        "function": "runGeminiDetection"
+      },
       {
         "source": "**",
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
 }

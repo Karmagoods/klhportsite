@@ -524,6 +524,7 @@ footer {
 =============================== */
 .software-card,
 .blog-section,
+.logo img,
 .work-item {
   display: flex;
   flex-direction: column;

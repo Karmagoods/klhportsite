@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KLH Farm Animal Detector</title>
+  <meta name="description" content="Upload images and let KLH's AI detect farm animals in real-time with bounding boxes and confidence scores.">
+  <link rel="stylesheet" href="app.css">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    /* Canvas overlay */
+    .preview-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    #canvasOverlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    /* Image preview styling */
+    #imagePreview {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Upload & Button */
+    .upload-section {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .file-input {
+      flex: 1;
+    }
+    .btn-primary {
+      padding: 0.5rem 1rem;
+      background-color: #28a745;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .btn-primary:disabled {
+      background-color: #94d3a2;
+      cursor: not-allowed;
+    }
+
+    /* Results container */
+    #resultsContainer {
+      margin-top: 1rem;
+    }
+
+    /* Container responsiveness */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Header */
+    .app-header {
+      background: #f8f9fa;
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+    .app-header .logo img {
+      height: 50px;
+    }
+    .app-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      padding: 0;
+      margin: 0;
+    }
+    .app-nav a {
+      text-decoration: none;
+      color: #333;
+    }
+    .app-nav a.active {
+      font-weight: bold;
+      color: #28a745;
+    }
+
+    /* Hero */
+    .app-hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .app-hero h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .app-hero .subtitle {
+      font-size: 1.1rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/newklh.webp" alt="KLH Innovation Logo" loading="lazy">
+      </a>
+      <nav class="app-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="app.html" class="active">Farm Animal Detector</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="app-hero">
+    <div class="container">
+      <h1>🐄 Farm Animal Detector</h1>
+      <p class="subtitle">Upload a farm image and watch our AI detect cows, pigs, chickens, and more in real-time.</p>
+    </div>
+  </section>
+
+  <!-- Main App Interface -->
+  <main class="app-container container">
+
+    <!-- Image Upload -->
+    <div class="upload-section">
+      <label for="imageInput" class="upload-label">Select an Image</label>
+      <input type="file" id="imageInput" accept="image/*" class="file-input">
+      <button id="detectButton" class="btn-primary">Run Detection</button>
+    </div>
+
+    <!-- Image Preview with Canvas Overlay -->
+    <div id="imagePreviewContainer" class="preview-container">
+      <div class="preview-wrapper">
+        <img id="imagePreview" src="" alt="Uploaded Preview" class="image-preview">
+        <canvas id="canvasOverlay"></canvas>
+      </div>
+    </div>
+
+    <!-- Detection Results -->
+    <div id="resultsContainer" class="results-container"></div>
+
+  </main>
+
+  <!-- How It Works Section -->
+  <section class="app-info container">
+    <h2>How the Farm Animal Detector Works</h2>
+    <p>Our AI model analyzes images to detect and highlight farm animals with bounding boxes and confidence scores.</p>
+    <ul>
+      <li>Upload any farm image</li>
+      <li>Click "Run Detection"</li>
+      <li>View predictions on the image with labels and confidence</li>
+    </ul>
+    <p class="cta-note">Experience AI detection directly in your browser — no installation required!</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container">
+      <p>© 2025 KLH Innovation. All rights reserved. | <a href="index.html">Back to Main Site</a></p>
+    </div>
+  </footer>
+
+  <!-- App JS -->
+  <script src="app.js"></script>
+</body>
+</html>

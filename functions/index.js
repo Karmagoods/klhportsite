@@ -1,83 +1,135 @@
-/* eslint-disable no-unused-vars */
-import {onRequest} from 'firebase-functions/v2/https';
-import logger from 'firebase-functions/logger';
-import nodemailer from 'nodemailer';
-import cors from 'cors';
-import functions from 'firebase-functions';
+import { onRequest } from 'firebase-functions/v2/https';
+import * as logger from 'firebase-functions/logger';
+import { defineSecret } from 'firebase-functions/params';
+import textToSpeech from '@google-cloud/text-to-speech';
 
-// Access environment variables directly from Firebase Functions config
-const gmailUser = functions.config().gmail.user;
-const gmailAppPassword = functions.config().gmail.pass;
+// ------------------------------
+// Secrets
+// ------------------------------
+const ROBOFLOW_KEY = defineSecret('ROBOFLOW_KEY');
 
-// Validate environment variables
-if (!gmailUser || !gmailAppPassword) {
-  logger.error('Missing environment variables.');
-  throw new Error('Environment variables not configured correctly.');
-}
+// ------------------------------
+// Google TTS Client
+// (Service Account is auto-used)
+// ------------------------------
+const ttsClient = new textToSpeech.TextToSpeechClient();
 
-// Create Nodemailer transporter using Gmail's SMTP with app password
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: gmailUser,
-    pass: gmailAppPassword,
+// ------------------------------
+// Farm Animal Detection
+// ------------------------------
+export const runFarmAnimalDetection = onRequest(
+  {
+    region: 'us-central1',
+    secrets: [ROBOFLOW_KEY],
   },
-});
+  async (req, res) => {
+    // ---------- CORS ----------
+    res.set('Access-Control-Allow-Origin', 'https://klhinnovation-6eac7.web.app');
+    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
 
-// CORS configuration to allow requests from your specific frontend domain
-const corsOptions = {
-  origin: 'https://klhinnovation-6eac7.web.app', // Replace with your frontend URL
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-};
+    if (req.method === 'OPTIONS') {
+      return res.status(204).send('');
+    }
 
-// Define the email-sending function
-export const sendEmail = onRequest((req, res) => {
-  cors(corsOptions)(req, res, async () => {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'POST only' });
+    }
+
     try {
-      // Ensure it's a POST request
-      if (req.method !== 'POST') {
-        return res.status(405).json({error: 'Method not allowed. Use POST.'});
+      const { imageBase64 } = req.body;
+      if (!imageBase64) {
+        return res.status(400).json({ error: 'Missing imageBase64' });
       }
 
-      const {to, subject, text, html} = req.body;
+      const rfResponse = await fetch(
+        'https://serverless.roboflow.com/klhinnovation/workflows/detect-and-classify-3',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            api_key: ROBOFLOW_KEY.value(),
+            inputs: {
+              image: {
+                type: 'base64',
+                value: imageBase64,
+              },
+            },
+          }),
+        }
+      );
 
-      // Check for required fields
-      if (!to || !subject) {
-        return res.status(400).json({
-          error: 'Missing required fields: \'to\' and \'subject\'.',
-        });
-      }
+      const data = await rfResponse.json();
+      logger.info('Roboflow response', data);
 
-      // Basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(to)) {
-        return res.status(400).json({
-          error: 'Invalid \'to\' email address format.',
-        });
-      }
-
-      // Log sending email
-      logger.info(`Sending email to ${to}`);
-
-      // Set up mail options
-      const mailOptions = {
-        from: gmailUser,
-        to,
-        subject,
-        text: text || '',
-        html: html || '',
-      };
-
-      // Send the email
-      await transporter.sendMail(mailOptions);
-      logger.info('Email sent successfully.');
-      return res.status(200).json({message: 'Email sent successfully.'});
-    } catch (error) {
-      logger.error('Error sending email:', error);
+      return res.status(200).json(data);
+    } catch (err) {
+      logger.error('Detection failed', err);
       return res.status(500).json({
-        error: 'Error sending email. Please try again later.',
+        error: 'Detection failed',
+        details: err.message,
       });
     }
-  });
-});
+  }
+);
+
+// ------------------------------
+// Google Cloud Text-to-Speech
+// ------------------------------
+export const runGoogleTTS = onRequest(
+  {
+    region: 'us-central1',
+  },
+  async (req, res) => {
+    // ---------- CORS ----------
+    res.set('Access-Control-Allow-Origin', 'https://klhinnovation-6eac7.web.app');
+    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      return res.status(204).send('');
+    }
+
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'POST only' });
+    }
+
+    try {
+      const {
+        text,
+        voice = 'en-US-Neural2-D',
+        speakingRate = 1,
+        pitch = 0,
+      } = req.body;
+
+      if (!text) {
+        return res.status(400).json({ error: 'Missing text' });
+      }
+
+      const request = {
+        input: { text },
+        voice: {
+          languageCode: 'en-US',
+          name: voice,
+        },
+        audioConfig: {
+          audioEncoding: 'MP3',
+          speakingRate,
+          pitch,
+        },
+      };
+
+      const [response] = await ttsClient.synthesizeSpeech(request);
+
+      return res.status(200).json({
+        audioBase64: response.audioContent.toString('base64'),
+      });
+    } catch (err) {
+      logger.error('TTS failed', err);
+      return res.status(500).json({
+        error: 'TTS failed',
+        details: err.message,
+      });
+    }
+  }
+);
