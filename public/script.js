@@ -11,7 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
 
       const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) submitBtn.disabled = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
 
       const formData = new FormData(form);
 
@@ -23,11 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (response.ok) {
-          status.innerHTML = '<p class="success">Thanks for your message! We will get back to you soon.</p>';
+          status.innerHTML = '<p class="success">Thanks for reaching out! We will get back to you shortly.</p>';
           form.reset();
         } else {
           const data = await response.json();
-          if (data.errors) {
+          if (data && data.errors) {
             status.innerHTML = `<p class="error">${data.errors.map(e => e.message).join(', ')}</p>`;
           } else {
             status.innerHTML = '<p class="error">Oops! There was a problem submitting your form.</p>';
@@ -36,26 +39,30 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (error) {
         status.innerHTML = '<p class="error">Network error. Please try again later.</p>';
       } finally {
-        if (submitBtn) submitBtn.disabled = false;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
       }
     });
   }
 
   /* ============================
-     HAMBURGER MENU
+     HAMBURGER & MOBILE MENU
   ============================ */
   const hamburger = document.querySelector('.hamburger');
   const nav = document.querySelector('.main-nav');
 
   if (hamburger && nav) {
     const toggleMenu = () => {
-      hamburger.classList.toggle('open');
+      const isOpen = hamburger.classList.toggle('open');
       nav.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     };
 
     hamburger.addEventListener('click', toggleMenu);
 
-    // Keyboard support
+    // Keyboard navigation support for hamburger
     hamburger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -65,23 +72,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================
-     SMOOTH SCROLL FOR NAV LINKS
+     SMOOTH SCROLL & AUTO-SELECT
   ============================ */
-  const navLinks = document.querySelectorAll('.main-nav a');
+  // Handles internal anchors for navigation links, hero buttons, and pricing CTAs
+  const internalLinks = document.querySelectorAll('a[href^="#"]');
+  const serviceSelect = document.getElementById('service-type');
 
-  navLinks.forEach(link => {
+  internalLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       const targetId = link.getAttribute('href');
-      if (targetId.startsWith('#')) {
-        e.preventDefault();
+
+      if (targetId && targetId !== '#') {
         const targetElement = document.querySelector(targetId);
+
         if (targetElement) {
+          e.preventDefault();
+
+          // Smooth scroll to target
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        // Close mobile menu after click
-        if (nav.classList.contains('open')) {
-          nav.classList.remove('open');
-          if (hamburger.classList.contains('open')) hamburger.classList.remove('open');
+
+          // Auto-select service in contact form if coming from a specific context
+          if (serviceSelect && targetId === '#contact') {
+            const parentCard = link.closest('.pricing-card, .service-card, .hero-split');
+            if (parentCard) {
+              const cardText = parentCard.textContent.toLowerCase();
+              if (cardText.includes('hospitality') || cardText.includes('ops')) {
+                serviceSelect.value = 'hospitality';
+              } else if (cardText.includes('web') || cardText.includes('ai') || cardText.includes('digital')) {
+                serviceSelect.value = 'webdev';
+              }
+            }
+          }
+
+          // Close mobile menu if open
+          if (nav && nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            if (hamburger && hamburger.classList.contains('open')) {
+              hamburger.classList.remove('open');
+              hamburger.setAttribute('aria-expanded', 'false');
+            }
+          }
         }
       }
     });
