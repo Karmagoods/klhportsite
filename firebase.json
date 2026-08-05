@@ -8,6 +8,14 @@
     ],
     "rewrites": [
       {
+        "source": "/api/models",
+        "function": "getAvailableModels"
+      },
+      {
+        "source": "/api/detect",
+        "function": "runDetection"
+      },
+      {
         "source": "/api/runGeminiDetection",
         "function": "runGeminiDetection"
       },

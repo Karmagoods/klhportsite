@@ -2,8 +2,8 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "private": true,
-  "type": "module",
   "main": "index.js",
+  "type": "commonjs",
   "engines": {
     "node": "20"
   },
@@ -14,9 +14,10 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
-    "@google-cloud/text-to-speech": "^6.4.0",
     "firebase-admin": "^12.7.0",
-    "firebase-functions": "^4.9.0"
+    "firebase-functions": "^5.1.0",
+    "@google-cloud/text-to-speech": "^6.4.0",
+    "@google/generative-ai": "^0.21.0"
   },
   "devDependencies": {
     "eslint": "^8.57.1",

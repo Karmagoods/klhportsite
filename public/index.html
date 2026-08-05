@@ -74,15 +74,14 @@
       <nav class="main-nav" aria-label="Main Navigation">
         <ul>
           <li><a href="#services">Services</a></li>
-<li><a href="#labs">Labs</a></li>
-<li><a href="#playground">AI Playground</a></li>
-<li><a href="tts.html" class="nav-cta">Text to Speech</a></li>
-<li><a href="#portfolio">Work</a></li>
-<li><a href="#blog">Blog</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="app.html" class="nav-cta">Roboflow App</a></li>
-<li><a href="#contact" class="nav-cta">Contact</a></li>
-
+          <li><a href="#labs">Labs</a></li>
+          <li><a href="#playground">AI Playground</a></li>
+          <li><a href="tts.html" class="nav-cta">Text to Speech</a></li>
+          <li><a href="#portfolio">Work</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="https://klhcomputervision.streamlit.app/" target="_blank" class="nav-cta">Computer Vision</a></li>
+          <li><a href="#contact" class="nav-cta">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -104,16 +103,18 @@
       </div>
     </div>
   </section>
-<!-- Gemini Object Detection Intro -->
-<section id="gemini-intro" class="software-section">
-  <div class="container">
-    <h2>Roboflow Object Detection</h2>
-    <p class="section-subtitle">
-      Upload an image and let our AI detect objects in real-time. Explore our advanced detection models built on Roboflow and Google AI.
-    </p>
-    <a href="app.html" class="btn-primary">Try the App</a>
-  </div>
-</section>
+
+  <!-- Gemini Object Detection Intro -->
+  <section id="gemini-intro" class="software-section">
+    <div class="container">
+      <h2>Computer Vision Lab</h2>
+      <p class="section-subtitle">
+        Upload an image and let our AI detect objects, faces, and motion in real-time. Explore our detection models built on OpenCV, Roboflow, and Google AI.
+      </p>
+      <a href="https://klhcomputervision.streamlit.app/" target="_blank" class="btn-primary">Try the App</a>
+    </div>
+  </section>
+
   <!-- Services -->
   <section id="services" class="services">
     <div class="container">
@@ -163,6 +164,17 @@
           <p>A modern remake of the classic DOS Nibbles game — play it in your browser.</p>
           <a href="KLHsnake/nibblesindex.html" target="_blank" class="btn-primary">Play Munch</a>
         </article>
+        <!-- ✨ NEW: La Duree Online Store -->
+        <article class="software-card">
+          <img src="https://klh-la-duree.onrender.com/static/images/logo2.jpg" 
+               alt="La Duree Logo" loading="lazy" style="border-radius: 8px;">
+          <h3>Online Store</h3>
+          <p>Full-stack e-commerce website with shopping cart, sessions, and checkout. Built with Flask (Python) + deployed on Render.com.</p>
+          <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://klh-la-duree.onrender.com" target="_blank" class="btn-primary">Flask Store →</a>
+            <a href="https://klhart-95f47.web.app" target="_blank" class="btn-primary" 
+               style="background-color: #4285f4;">Firebase Store →</a>
+          </div>
       </div>
     </div>
   </section>
@@ -180,33 +192,83 @@
           <p>Interact with our collection of AI-powered demos, including chatbots, content generation, and data tools.</p>
           <a href="https://klhinnovationai.streamlit.app/" target="_blank" class="btn-primary">Launch Playground</a>
         </article>
+
+        <article class="software-card">
+          <img src="images/ailogo.jpg" alt="Computer Vision Lab" loading="lazy">
+          <h3>Computer Vision Lab</h3>
+          <p>Live object detection, face detection, and motion analysis powered by OpenCV, Roboflow, and Google Gemini.</p>
+          <a href="https://klhcomputervision.streamlit.app/" target="_blank" class="btn-primary">Open CV Lab</a>
+        </article>
       </div>
     </div>
   </section>
 
-
-  <!-- Portfolio -->
-  <section id="portfolio" class="section work-section">
+  <!-- Pricing -->
+  <section id="pricing" class="pricing-section">
     <div class="container">
-      <h2>Highlighted Creations</h2>
-      <p class="section-subtitle">A glimpse into projects that blend design, structure, and meaningful user experiences.</p>
+      <h2>Simple, Honest Pricing</h2>
+      <p class="section-subtitle">No hidden fees. No bloated retainers. Just clear deliverables at fair rates.</p>
 
-      <div class="work-grid">
-        <figure class="work-item">
-          <img src="images/image_fx_ (84).jpg" alt="Dashboard interface concept" loading="lazy">
-          <figcaption>An intuitive dashboard crafted to streamline complex workflows for modern teams</figcaption>
-        </figure>
+      <div class="pricing-grid">
 
-        <figure class="work-item">
-          <img src="images/image_fx_ (29).jpg" alt="Mobile UI design concept" loading="lazy">
-          <figcaption>Elegant mobile interfaces designed for seamless productivity on the go</figcaption>
-        </figure>
+        <article class="pricing-card">
+          <div class="pricing-header">
+            <h3>Starter</h3>
+            <div class="pricing-price">From <span>R3 500</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ Single-page website or landing page</li>
+            <li>✓ Mobile-responsive design</li>
+            <li>✓ Contact form & basic SEO</li>
+            <li>✓ 1 revision round</li>
+            <li>✓ Delivered in 5–7 days</li>
+            <li class="pricing-divider">— OR —</li>
+            <li>✓ Hospitality ops audit (single area)</li>
+            <li>✓ Written report with action points</li>
+          </ul>
+          <a href="#contact" class="btn-secondary">Get Started</a>
+        </article>
 
-        <figure class="work-item">
-          <img src="images/image_fx_ (87).jpg" alt="Corporate website concept" loading="lazy">
-          <figcaption>Sophisticated website concepts tailored to consulting and legal professionals</figcaption>
-        </figure>
+        <article class="pricing-card pricing-featured">
+          <div class="pricing-badge">Most Popular</div>
+          <div class="pricing-header">
+            <h3>Professional</h3>
+            <div class="pricing-price">From <span>R8 500</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ Multi-page website or web app</li>
+            <li>✓ Custom UI/UX design & branding</li>
+            <li>✓ API or AI integration</li>
+            <li>✓ 2 revision rounds</li>
+            <li>✓ Delivered in 10–14 days</li>
+            <li class="pricing-divider">— OR —</li>
+            <li>✓ Full hospitality systems review</li>
+            <li>✓ SOPs, training manuals & compliance docs</li>
+          </ul>
+          <a href="#contact" class="btn-primary">Get Started</a>
+        </article>
+
+        <article class="pricing-card">
+          <div class="pricing-header">
+            <h3>Custom</h3>
+            <div class="pricing-price">Let's <span>Talk</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li>✓ Full digital system builds</li>
+            <li>✓ Franchise documentation packages</li>
+            <li>✓ Ongoing AI & automation support</li>
+            <li>✓ Multi-phase consulting engagements</li>
+            <li>✓ Retainer arrangements available</li>
+            <li class="pricing-divider">— AND —</li>
+            <li>✓ Scoped to your exact needs</li>
+            <li>✓ Free discovery call to start</li>
+          </ul>
+          <a href="#contact" class="btn-secondary">Book a Call</a>
+        </article>
+
       </div>
+
+      <p class="pricing-note">All prices in ZAR. International clients welcome — USD/EUR invoicing available.</p>
     </div>
   </section>
 
@@ -241,7 +303,7 @@
     <div class="container">
       <h2>Client Feedback</h2>
       <blockquote>
-        “KLH redesigned our website and we saw a 60% increase in client inquiries.”
+        "KLH redesigned our website and we saw a 60% increase in client inquiries."
         <cite>— Legal Firm, Johannesburg</cite>
       </blockquote>
     </div>
@@ -251,7 +313,7 @@
   <section id="contact" class="contact-section">
     <div class="container">
       <h2>Contact Us</h2>
-      <p>Have a project or idea? Let’s build something sharp together.</p>
+      <p>Have a project or idea? Let's build something sharp together.</p>
 
       <form id="contact-form" novalidate>
         <label for="name">Name*</label>

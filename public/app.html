@@ -3,175 +3,201 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KLH Farm Animal Detector</title>
-  <meta name="description" content="Upload images and let KLH's AI detect farm animals in real-time with bounding boxes and confidence scores.">
-  <link rel="stylesheet" href="app.css">
+  <title>KLH Multi-Model Computer Vision AI Portal</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Access and run state-of-the-art computer vision models. Upload images or capture in real-time to detect animals, construction safety gear, license plates, and common objects using Roboflow and Gemini.">
+  <meta name="keywords" content="computer vision, object detection, AI, roboflow, gemini 1.5, farm animal detector, construction safety, license plate recognition, real-time image analysis">
+  <meta name="author" content="KLH Innovation">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="KLH Multi-Model Computer Vision AI Portal">
+  <meta property="og:description" content="Run computer vision detections on farm animals, construction sites, vehicle plates, and general scenes with Auto-Selection.">
+  <meta property="og:image" content="/images/ailogo.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon and Styling -->
   <link rel="icon" href="/favicon.ico">
-  <style>
-    /* Canvas overlay */
-    .preview-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    #canvasOverlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
-
-    /* Image preview styling */
-    #imagePreview {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    /* Upload & Button */
-    .upload-section {
-      margin-bottom: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    .file-input {
-      flex: 1;
-    }
-    .btn-primary {
-      padding: 0.5rem 1rem;
-      background-color: #28a745;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .btn-primary:disabled {
-      background-color: #94d3a2;
-      cursor: not-allowed;
-    }
-
-    /* Results container */
-    #resultsContainer {
-      margin-top: 1rem;
-    }
-
-    /* Container responsiveness */
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    /* Header */
-    .app-header {
-      background: #f8f9fa;
-      padding: 0.5rem 0;
-      margin-bottom: 1rem;
-    }
-    .app-header .logo img {
-      height: 50px;
-    }
-    .app-nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
-      padding: 0;
-      margin: 0;
-    }
-    .app-nav a {
-      text-decoration: none;
-      color: #333;
-    }
-    .app-nav a.active {
-      font-weight: bold;
-      color: #28a745;
-    }
-
-    /* Hero */
-    .app-hero {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .app-hero h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    .app-hero .subtitle {
-      font-size: 1.1rem;
-      color: #555;
-    }
-  </style>
+  <link rel="stylesheet" href="app.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Header / Navigation -->
+  <!-- Premium Glass Header -->
   <header class="app-header">
-    <div class="container">
-      <a href="index.html" class="logo">
+    <div class="header-container">
+      <a href="index.html" class="logo" id="logoLink">
         <img src="images/newklh.webp" alt="KLH Innovation Logo" loading="lazy">
       </a>
       <nav class="app-nav">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="app.html" class="active">Farm Animal Detector</a></li>
+          <li><a href="index.html" id="navHome">Home</a></li>
+          <li><a href="app.html" class="active" id="navPortal">AI Vision Portal</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- Hero Branding -->
   <section class="app-hero">
-    <div class="container">
-      <h1>🐄 Farm Animal Detector</h1>
-      <p class="subtitle">Upload a farm image and watch our AI detect cows, pigs, chickens, and more in real-time.</p>
+    <div class="hero-container">
+      <span class="badge">KLH LABS EXPLORER</span>
+      <h1>AI Computer Vision Portal</h1>
+      <p class="subtitle">Select a specialised model, or choose Auto mode to let Gemini analyze your image and route it to the optimal vision network.</p>
     </div>
   </section>
 
-  <!-- Main App Interface -->
-  <main class="app-container container">
+  <!-- Main Portal Layout -->
+  <main class="app-main-layout">
+    <div class="workspace-grid">
+      
+      <!-- Control Panel (Left column on desktop) -->
+      <section class="panel control-panel" id="controlPanel">
+        
+        <!-- Step 1: Model Config -->
+        <div class="step-card" id="step1Card">
+          <div class="step-header">
+            <span class="step-num">1</span>
+            <h2>Choose Detection Model</h2>
+          </div>
+          <div class="form-group">
+            <label for="modelSelect">Active Vision Engine</label>
+            <div class="select-wrapper">
+              <select id="modelSelect" class="form-select">
+                <option value="auto" selected>✨ Auto Mode (AI Decides)</option>
+                <!-- Dynamically populated from /api/models -->
+              </select>
+            </div>
+            <p id="modelDescription" class="helper-text">Retrieving configuration...</p>
+          </div>
+        </div>
 
-    <!-- Image Upload -->
-    <div class="upload-section">
-      <label for="imageInput" class="upload-label">Select an Image</label>
-      <input type="file" id="imageInput" accept="image/*" class="file-input">
-      <button id="detectButton" class="btn-primary">Run Detection</button>
+        <!-- Step 2: Image Source -->
+        <div class="step-card" id="step2Card">
+          <div class="step-header">
+            <span class="step-num">2</span>
+            <h2>Select Image Source</h2>
+          </div>
+          
+          <div class="tab-selectors">
+            <button id="tabUpload" class="tab-btn active" type="button">📁 Upload File</button>
+            <button id="tabCamera" class="tab-btn" type="button">📷 Live Camera</button>
+          </div>
+
+          <!-- Upload Mode Content -->
+          <div id="fileSection" class="input-section active">
+            <div class="file-dropzone" id="dropzone">
+              <input type="file" id="imageInput" accept="image/*" class="file-input-hidden">
+              <div class="dropzone-content">
+                <svg class="icon-upload" viewBox="0 0 24 24" width="48" height="48">
+                  <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                </svg>
+                <p>Drag & drop or <span class="highlight">browse</span></p>
+                <span class="format-hint">Supports PNG, JPG, WebP</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Camera Mode Content -->
+          <div id="cameraSection" class="input-section">
+            <div class="camera-controls">
+              <button id="startWebcamBtn" class="btn-secondary" type="button">Turn On Camera</button>
+              <button id="captureBtn" class="btn-primary" type="button" disabled>Capture Frame</button>
+              <button id="stopWebcamBtn" class="btn-danger" type="button" style="display: none;">Turn Off</button>
+            </div>
+            <p class="camera-hint">Requires permission to access device camera.</p>
+          </div>
+        </div>
+
+        <!-- Run Trigger -->
+        <div class="action-card" id="actionCard">
+          <button id="detectButton" class="btn-action" disabled>
+            <span class="btn-text">Run Vision Analysis</span>
+            <div class="btn-spinner" style="display: none;"></div>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- Visualiser Panel (Right column on desktop) -->
+      <section class="panel visualizer-panel" id="visualizerPanel">
+        
+        <!-- Step 3: Output Display -->
+        <div class="visualizer-card">
+          <div class="visualizer-header">
+            <h2>Image Live View & Bounding Boxes</h2>
+            <span id="detectedModelBadge" class="model-badge" style="display: none;">Auto Routed</span>
+          </div>
+
+          <!-- Display Wrapper -->
+          <div class="media-container" id="mediaContainer">
+            <!-- Empty Placeholder State -->
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <div class="placeholder-icon">👁️‍🗨️</div>
+              <p>Upload a file or toggle the webcam to prepare analysis</p>
+            </div>
+
+            <!-- Image View -->
+            <div class="preview-wrapper" id="previewWrapper" style="display: none;">
+              <img id="imagePreview" src="" alt="Active visualizer subject">
+              <canvas id="canvasOverlay"></canvas>
+            </div>
+
+            <!-- Video Stream -->
+            <div class="video-wrapper" id="videoWrapper" style="display: none;">
+              <video id="webcamVideo" autoplay playsinline muted></video>
+            </div>
+          </div>
+
+          <!-- Output Statistics and Labels -->
+          <div class="output-console">
+            <div class="output-console-header">
+              <h3>Detection Breakdown</h3>
+              <span id="timingBadge" class="time-badge" style="display: none;">0.0s</span>
+            </div>
+            <div id="resultsContainer" class="results-wrapper">
+              <p class="empty-results-text">Awaiting detection run...</p>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
     </div>
-
-    <!-- Image Preview with Canvas Overlay -->
-    <div id="imagePreviewContainer" class="preview-container">
-      <div class="preview-wrapper">
-        <img id="imagePreview" src="" alt="Uploaded Preview" class="image-preview">
-        <canvas id="canvasOverlay"></canvas>
-      </div>
-    </div>
-
-    <!-- Detection Results -->
-    <div id="resultsContainer" class="results-container"></div>
-
   </main>
 
-  <!-- How It Works Section -->
-  <section class="app-info container">
-    <h2>How the Farm Animal Detector Works</h2>
-    <p>Our AI model analyzes images to detect and highlight farm animals with bounding boxes and confidence scores.</p>
-    <ul>
-      <li>Upload any farm image</li>
-      <li>Click "Run Detection"</li>
-      <li>View predictions on the image with labels and confidence</li>
-    </ul>
-    <p class="cta-note">Experience AI detection directly in your browser — no installation required!</p>
+  <!-- Detail Guide Section -->
+  <section class="app-info container" id="infoSection">
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>🔍 Dynamic Auto Routing</h3>
+        <p>When in Auto mode, your image is first evaluated by Gemini 1.5 Flash to match the visual context (animals, safety, transit) to the exact model. Inference is then run on that specific subset, giving you optimal accuracy without manual sorting.</p>
+      </div>
+      <div class="info-card">
+        <h3>⚡ Modular CV Pipelines</h3>
+        <p>Our backend coordinates both Roboflow Workflows and standard Object Detection APIs. The outputs are fully normalized into unified coordinate mapping systems before they are fed to the rendering overlay.</p>
+      </div>
+      <div class="info-card">
+        <h3>📱 Mobile First Design</h3>
+        <p>Perfect for scanning items in the field. Built with touch-targets, responsive video feeds, and hardware-accelerated canvas overlays designed to scale perfectly on phones and tablets.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Global Footer -->
   <footer class="app-footer">
     <div class="container">
-      <p>© 2025 KLH Innovation. All rights reserved. | <a href="index.html">Back to Main Site</a></p>
+      <p>© 2026 KLH Innovation. All rights reserved. | Powered by Gemini & Roboflow | <a href="index.html">Back to Main Studio</a></p>
     </div>
   </footer>
 
-  <!-- App JS -->
+  <!-- Core App JS -->
   <script src="app.js"></script>
 </body>
 </html>

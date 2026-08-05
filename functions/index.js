@@ -1,135 +1,272 @@
-import { onRequest } from 'firebase-functions/v2/https';
-import * as logger from 'firebase-functions/logger';
-import { defineSecret } from 'firebase-functions/params';
-import textToSpeech from '@google-cloud/text-to-speech';
+const {onRequest} = require("firebase-functions/v2/https");
+const logger = require("firebase-functions/logger");
+const {defineSecret} = require("firebase-functions/params");
+
+const textToSpeech = require("@google-cloud/text-to-speech");
+const {GoogleGenerativeAI} = require("@google/generative-ai");
+
+const fs = require("fs");
+const path = require("path");
+
+// ------------------------------
+// SAFE LOAD models.json
+// ------------------------------
+const modelsConfigPath = path.join(__dirname, "models.json");
+
+let modelsConfig = {models: []};
+
+try {
+  const raw = fs.readFileSync(modelsConfigPath, "utf8");
+  modelsConfig = JSON.parse(raw);
+} catch (err) {
+  logger.error("Failed to load models.json", err);
+}
 
 // ------------------------------
 // Secrets
 // ------------------------------
-const ROBOFLOW_KEY = defineSecret('ROBOFLOW_KEY');
+const ROBOFLOW_KEY = defineSecret("ROBOFLOW_KEY");
+const GEMINI_API_KEY = defineSecret("GEMINI_API_KEY");
 
 // ------------------------------
-// Google TTS Client
-// (Service Account is auto-used)
+// Clients
 // ------------------------------
 const ttsClient = new textToSpeech.TextToSpeechClient();
 
 // ------------------------------
-// Farm Animal Detection
+// CORS (safe + emulator friendly)
 // ------------------------------
-export const runFarmAnimalDetection = onRequest(
-  {
-    region: 'us-central1',
-    secrets: [ROBOFLOW_KEY],
-  },
-  async (req, res) => {
-    // ---------- CORS ----------
-    res.set('Access-Control-Allow-Origin', 'https://klhinnovation-6eac7.web.app');
-    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type');
+function setCorsHeaders(req, res) {
+  const origin = req.headers.origin;
 
-    if (req.method === 'OPTIONS') {
-      return res.status(204).send('');
-    }
+  const allowed =
+    origin &&
+    (
+      origin.includes("localhost") ||
+      origin.includes("127.0.0.1") ||
+      origin.includes("web.app") ||
+      origin.includes("firebaseapp.com")
+    );
 
-    if (req.method !== 'POST') {
-      return res.status(405).json({ error: 'POST only' });
-    }
-
-    try {
-      const { imageBase64 } = req.body;
-      if (!imageBase64) {
-        return res.status(400).json({ error: 'Missing imageBase64' });
-      }
-
-      const rfResponse = await fetch(
-        'https://serverless.roboflow.com/klhinnovation/workflows/detect-and-classify-3',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            api_key: ROBOFLOW_KEY.value(),
-            inputs: {
-              image: {
-                type: 'base64',
-                value: imageBase64,
-              },
-            },
-          }),
-        }
-      );
-
-      const data = await rfResponse.json();
-      logger.info('Roboflow response', data);
-
-      return res.status(200).json(data);
-    } catch (err) {
-      logger.error('Detection failed', err);
-      return res.status(500).json({
-        error: 'Detection failed',
-        details: err.message,
-      });
-    }
+  if (allowed) {
+    res.set("Access-Control-Allow-Origin", origin);
   }
+
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+}
+
+// ------------------------------
+// Gemini CLASSIFIER
+// ------------------------------
+async function classifyImageWithGemini(imageBase64, apiKey) {
+  const genAI = new GoogleGenerativeAI(apiKey);
+
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+  });
+
+  const prompt =
+    "Pick best model ID:\n" +
+    modelsConfig.models.map((m) => `- ${m.id}: ${m.description}`).join("\n") +
+    "\nReturn ONLY model ID or gemini-general.";
+
+  const result = await model.generateContent([
+    prompt,
+    {
+      inlineData: {
+        data: imageBase64,
+        mimeType: "image/jpeg",
+      },
+    },
+  ]);
+
+  const text = (result.response.text() || "").trim();
+
+  const match = modelsConfig.models.find((m) => m.id === text);
+  return match ? match.id : "gemini-general";
+}
+
+// ------------------------------
+// Gemini DETECTION (safe JSON parsing)
+// ------------------------------
+async function runGeminiDetection(imageBase64, apiKey, threshold = 0.4) {
+  const genAI = new GoogleGenerativeAI(apiKey);
+
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+    generationConfig: {
+      responseMimeType: "application/json",
+    },
+  });
+
+  const prompt =
+    "Return ONLY a JSON array of detections. " +
+    "Each item must include class, confidence, box_2d. " +
+    "Only include confidence > " + threshold;
+
+  const result = await model.generateContent([
+    prompt,
+    {
+      inlineData: {
+        data: imageBase64,
+        mimeType: "image/jpeg",
+      },
+    },
+  ]);
+
+  try {
+    const text = result.response.text();
+    const parsed = JSON.parse(text);
+
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (err) {
+    logger.error("Gemini JSON parse failed", err);
+    return [];
+  }
+}
+
+// ------------------------------
+// Roboflow fallback parser
+// ------------------------------
+function extractPredictions(data) {
+  return (
+    data?.outputs?.[0]?.predictions ||
+    data?.predictions ||
+    []
+  );
+}
+
+// ------------------------------
+// GET MODELS
+// ------------------------------
+exports.getAvailableModels = onRequest(
+    {region: "us-central1"},
+    async (req, res) => {
+      setCorsHeaders(req, res);
+      if (req.method === "OPTIONS") return res.status(204).send("");
+      if (req.method !== "GET") return res.status(405).send("GET only");
+
+      return res.json(modelsConfig);
+    },
 );
 
 // ------------------------------
-// Google Cloud Text-to-Speech
+// MAIN DETECTION ENDPOINT
 // ------------------------------
-export const runGoogleTTS = onRequest(
-  {
-    region: 'us-central1',
-  },
-  async (req, res) => {
-    // ---------- CORS ----------
-    res.set('Access-Control-Allow-Origin', 'https://klhinnovation-6eac7.web.app');
-    res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type');
+exports.runDetection = onRequest(
+    {
+      region: "us-central1",
+      secrets: [ROBOFLOW_KEY, GEMINI_API_KEY],
+      timeoutSeconds: 60,
+    },
+    async (req, res) => {
+      setCorsHeaders(req, res);
 
-    if (req.method === 'OPTIONS') {
-      return res.status(204).send('');
-    }
+      if (req.method === "OPTIONS") return res.status(204).send("");
+      if (req.method !== "POST") return res.status(405).send("POST only");
 
-    if (req.method !== 'POST') {
-      return res.status(405).json({ error: 'POST only' });
-    }
+      try {
+        const {imageBase64, modelId = "auto"} = req.body || {};
 
-    try {
-      const {
-        text,
-        voice = 'en-US-Neural2-D',
-        speakingRate = 1,
-        pitch = 0,
-      } = req.body;
+        if (!imageBase64) {
+          return res.status(400).json({error: "Missing imageBase64"});
+        }
 
-      if (!text) {
-        return res.status(400).json({ error: 'Missing text' });
+        let selectedModel = modelId;
+
+        // AUTO ROUTING
+        if (modelId === "auto") {
+          const apiKey = GEMINI_API_KEY.value();
+          selectedModel = await classifyImageWithGemini(imageBase64, apiKey);
+        }
+
+        const model =
+        modelsConfig.models.find((m) => m.id === selectedModel) ||
+        modelsConfig.models[0];
+
+        let predictions = [];
+
+        // GEMINI MODEL
+        if (model.type === "gemini-detect") {
+          const apiKey = GEMINI_API_KEY.value();
+          predictions = await runGeminiDetection(imageBase64, apiKey);
+        } else {
+        // ROBOFLOW MODEL
+          const rfKey = ROBOFLOW_KEY.value();
+
+          const url = model.endpoint + "?api_key=" + rfKey;
+
+          const rfRes = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({image: imageBase64}),
+          });
+
+          const data = await rfRes.json();
+          predictions = extractPredictions(data);
+        }
+
+        return res.json({
+          success: true,
+          modelUsed: model.id,
+          predictions,
+        });
+      } catch (err) {
+        logger.error("runDetection failed", err);
+
+        return res.status(500).json({
+          success: false,
+          error: err.message,
+        });
       }
+    },
+);
 
-      const request = {
-        input: { text },
-        voice: {
-          languageCode: 'en-US',
-          name: voice,
-        },
-        audioConfig: {
-          audioEncoding: 'MP3',
-          speakingRate,
-          pitch,
-        },
-      };
+// ------------------------------
+// TTS ENDPOINT
+// ------------------------------
+exports.runGoogleTTS = onRequest(
+    {region: "us-central1"},
+    async (req, res) => {
+      res.set("Access-Control-Allow-Origin", "*");
+      res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.set("Access-Control-Allow-Headers", "Content-Type");
 
-      const [response] = await ttsClient.synthesizeSpeech(request);
+      if (req.method === "OPTIONS") return res.status(204).send("");
+      if (req.method !== "POST") return res.status(405).send("POST only");
 
-      return res.status(200).json({
-        audioBase64: response.audioContent.toString('base64'),
-      });
-    } catch (err) {
-      logger.error('TTS failed', err);
-      return res.status(500).json({
-        error: 'TTS failed',
-        details: err.message,
-      });
-    }
-  }
+      try {
+        const {text} = req.body || {};
+
+        if (!text) {
+          return res.status(400).json({error: "Missing text"});
+        }
+
+        const request = {
+          input: {text},
+          voice: {
+            languageCode: "en-US",
+            name: "en-US-Neural2-D",
+          },
+          audioConfig: {
+            audioEncoding: "MP3",
+          },
+        };
+
+        const [response] = await ttsClient.synthesizeSpeech(request);
+
+        return res.json({
+          audioBase64: response.audioContent.toString("base64"),
+        });
+      } catch (err) {
+        logger.error("TTS failed", err);
+
+        return res.status(500).json({
+          error: err.message,
+        });
+      }
+    },
 );

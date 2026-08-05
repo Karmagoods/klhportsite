@@ -1,0 +1,39 @@
+{
+  "models": [
+    {
+      "id": "farm-animals",
+      "name": "Farm Animals",
+      "type": "roboflow-workflow",
+      "endpoint": "https://serverless.roboflow.com/klhinnovation/workflows/detect-and-classify-3",
+      "description": "Detects livestock including cows, pigs, chickens, sheep, and horses.",
+      "keywords": ["farm", "animal", "cow", "pig", "chicken", "sheep", "horse", "goat", "barn", "livestock", "agriculture"],
+      "confidenceThreshold": 0.4
+    },
+    {
+      "id": "construction-safety",
+      "name": "Construction Safety",
+      "type": "roboflow-detect",
+      "endpoint": "https://detect.roboflow.com/construction-site-safety/1",
+      "description": "Detects safety gear like helmets, high-vis vests, boots, and goggles.",
+      "keywords": ["construction", "safety", "worker", "helmet", "vest", "hard hat", "ppe", "building site", "industrial"],
+      "confidenceThreshold": 0.5
+    },
+    {
+      "id": "license-plates",
+      "name": "License Plates",
+      "type": "roboflow-detect",
+      "endpoint": "https://detect.roboflow.com/vehicle-registration-plates-tr2r8/2",
+      "description": "Detects and localizes vehicle registration plates.",
+      "keywords": ["license plate", "car plate", "vehicle registration", "plate", "traffic", "parking", "car", "truck"],
+      "confidenceThreshold": 0.3
+    },
+    {
+      "id": "gemini-general",
+      "name": "General Objects (Gemini AI)",
+      "type": "gemini-detect",
+      "description": "Detects everyday objects using multimodal Gemini 1.5 Flash.",
+      "keywords": ["general", "object", "household", "person", "chair", "table", "laptop", "kitchen", "office", "street"],
+      "confidenceThreshold": 0.4
+    }
+  ]
+}
