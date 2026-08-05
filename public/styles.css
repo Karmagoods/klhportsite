@@ -35,7 +35,8 @@ a {
 button,
 a,
 .btn-primary,
-.btn-secondary {
+.btn-secondary,
+.btn-hero {
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -85,6 +86,8 @@ header {
 /* Hamburger */
 .hamburger {
   display: none;
+  background: transparent;
+  border: none;
   width: 30px;
   height: 22px;
   flex-direction: column;
@@ -109,26 +112,26 @@ header {
 }
 
 /* ============================
-   SPLIT HERO (OPTION A)
+   SPLIT HERO (DUAL-ENTRY)
 =============================== */
 .split-hero {
   display: flex;
-  min-height: 85vh;
+  min-height: 80vh;
   width: 100%;
   overflow: hidden;
 }
 
 .hero-split {
-  flex: 1;
+  flex: 1 1 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 3rem;
+  padding: 5rem 3rem;
   text-align: center;
   transition: flex 0.4s ease;
 }
 
-/* Left Side: Web & AI (Blue Side) */
+/* Left Side: Web & AI (Dark/Blue Side) */
 .hero-left {
   background: linear-gradient(135deg, #0b3d91, #008c8f);
   color: #ffffff;
@@ -136,13 +139,14 @@ header {
 
 /* Right Side: Hospitality (Light Side) */
 .hero-right {
-  background: linear-gradient(135deg, #f9fbfd, #eaf1f8);
+  background: linear-gradient(135deg, #ffffff, #f0f4f8);
   color: #1a1a1a;
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .hero-content {
-  max-width: 500px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .hero-badge {
@@ -155,17 +159,17 @@ header {
   letter-spacing: 1px;
   margin-bottom: 1.2rem;
   background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  color: #ffffff;
 }
 
 .hero-badge.badge-dark {
   background: #0b3d91;
-  color: #fff;
+  color: #ffffff;
 }
 
 .hero-split h1 {
   font-size: 2.3rem;
-  line-height: 1.2;
+  line-height: 1.25;
   margin-bottom: 1rem;
 }
 
@@ -179,7 +183,7 @@ header {
 }
 
 .hero-split p {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 2rem;
   line-height: 1.5;
 }
@@ -195,11 +199,11 @@ header {
 /* Hero Action Buttons */
 .btn-hero {
   display: inline-block;
-  padding: 1rem 2rem;
+  padding: 0.9rem 1.8rem;
   border-radius: 8px;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
@@ -212,6 +216,7 @@ header {
 .btn-blue:hover {
   background: #e0f2fe;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 .btn-white {
@@ -221,7 +226,9 @@ header {
 
 .btn-white:hover {
   background: #008c8f;
+  color: #ffffff;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 /* ============================
@@ -229,7 +236,7 @@ header {
 =============================== */
 section h2 {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   margin-bottom: 0.8rem;
   color: #0b3d91;
 }
@@ -247,7 +254,7 @@ section h2 {
 
 .section-subtitle {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #555;
   margin-bottom: 2.5rem;
   max-width: 700px;
@@ -323,6 +330,8 @@ section h2 {
 
 .btn-primary:hover {
   background: #008c8f;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -338,6 +347,7 @@ section h2 {
 .btn-secondary:hover {
   background: #0b3d91;
   color: #fff;
+  transform: translateY(-2px);
 }
 
 /* ============================
@@ -659,11 +669,12 @@ footer {
   }
 
   .hero-split {
-    padding: 4rem 1.5rem;
+    padding: 3.5rem 1.5rem;
+    border-left: none;
   }
 
   .hero-split h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
 }
 
@@ -691,5 +702,9 @@ footer {
 
   .pricing-grid {
     grid-template-columns: 1fr;
+  }
+
+  section h2 {
+    font-size: 1.9rem;
   }
 }
