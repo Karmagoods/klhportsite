@@ -64,330 +64,484 @@
 
 <body>
 
-  <!-- Header -->
-  <header>
+  <header class="site-header">
     <div class="container nav-container">
       <a href="#home" class="logo" aria-label="KLH Innovation Home">
-        <img src="images/newklh.webp" alt="KLH Innovation Logo" loading="lazy">
+        <img src="images/newklh.webp" alt="KLH Innovation Logo">
       </a>
 
       <nav class="main-nav" aria-label="Main Navigation">
         <ul>
-          <li><a href="#webdev">Web & AI</a></li>
-          <li><a href="#hospitality">Hospitality Ops</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#hospitality">Hospitality</a></li>
           <li><a href="#labs">Labs</a></li>
-          <li><a href="#playground">AI Playground</a></li>
-          <li><a href="tts.html" class="nav-cta">Text to Speech</a></li>
-          <li><a href="#portfolio">Work</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#contact" class="nav-cta">Contact</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
         </ul>
       </nav>
-    </div>
 
-    <button class="hamburger" aria-label="Toggle Navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+      <button class="hamburger" aria-label="Toggle Navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
-  <!-- Split Hero (Option A Dual-Entry) -->
-  <section id="home" class="split-hero">
-    <!-- Left Side: Web & AI Development (Blue Side) -->
-    <div class="hero-split hero-left">
-      <div class="hero-content">
-        <span class="hero-badge">Digital Studio</span>
-        <h1>Web Systems, Design & AI Solutions</h1>
-        <p>We build websites, custom web apps, and AI integrations with clean logic, sharp identity, and technical precision.</p>
-        <a href="#webdev" class="btn-hero btn-blue">Explore Digital Services ↓</a>
-      </div>
-    </div>
+  <main>
 
-    <!-- Right Side: Hospitality Operations (White/Light Side) -->
-    <div class="hero-split hero-right">
-      <div class="hero-content">
-        <span class="hero-badge badge-dark">Ops Advisory</span>
-        <h1>Hospitality Systems & Cost Control</h1>
-        <p>Precision menu costing, stock management, cost-of-sales reporting, bar setup, and full POS implementation.</p>
-        <a href="#hospitality" class="btn-hero btn-white">Explore Hospitality Ops ↓</a>
-      </div>
-    </div>
-  </section>
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">KLH INNOVATION / DIGITAL STUDIO</span>
+          <h1>We build <em>useful things.</em></h1>
+          <p class="hero-lead">
+            Digital systems, AI tools and practical technology for businesses
+            that have real problems to solve.
+          </p>
 
-  <!-- Section 1: Web Development & Digital Systems -->
-  <section id="webdev" class="services">
-    <div class="container">
-      <h2>Web Development & AI Solutions</h2>
-
-      <div class="service-grid">
-        <article class="service-card">
-          <h3>Web Applications & Systems</h3>
-          <p>Dashboards, client portals, PWAs, admin tools & custom-built digital systems.</p>
-        </article>
-
-        <article class="service-card">
-          <h3>Web Design & UX/UI</h3>
-          <p>Professional websites, clean interfaces, mobile-first layouts & optimized performance.</p>
-        </article>
-
-        <article class="service-card">
-          <h3>Brand Identity & Content</h3>
-          <p>Logos, visual systems, tone-of-voice & structured brand storytelling.</p>
-        </article>
-
-        <article class="service-card">
-          <h3>AI Integrations & API Development</h3>
-          <p>Custom AI tools, LLM integration, and APIs that power intelligent automation & data insights.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 2: Hospitality Systems & Advisory -->
-  <section id="hospitality" class="hospitality-section">
-    <div class="container">
-      <span class="section-tagline">Operations & Cost Optimization</span>
-      <h2>Hospitality Systems & Management</h2>
-      <p class="section-subtitle">Combining practical bar & kitchen experience with digital systems precision to safeguard your margins.</p>
-
-      <div class="service-grid">
-        <article class="service-card hospitality-card">
-          <div class="card-icon">📊</div>
-          <h3>Menu Costing & Engineering</h3>
-          <p>Recipe breakdown, yield calculation, item contribution margin analysis, and menu design designed for maximum gross profitability.</p>
-        </article>
-
-        <article class="service-card hospitality-card">
-          <div class="card-icon">📦</div>
-          <h3>Stock Control & Variance Systems</h3>
-          <p>Par-level tracking, inventory audit structures, waste logging protocols, and weekly variance monitoring workflows.</p>
-        </article>
-
-        <article class="service-card hospitality-card">
-          <div class="card-icon">📈</div>
-          <h3>Cost of Sales (COS) Reports</h3>
-          <p>In-depth gross profit reviews, COGS tracking, monthly financial analysis, and actionable loss-prevention insights.</p>
-        </article>
-
-        <article class="service-card hospitality-card">
-          <div class="card-icon">🍸</div>
-          <h3>Bar Architecture & Setup</h3>
-          <p>Ergonomic bar design, speed-well layouts, beverage menu costing, pouring efficiency guides, and cocktail batching procedures.</p>
-        </article>
-
-        <article class="service-card hospitality-card">
-          <div class="card-icon">💻</div>
-          <h3>POS Selection & Implementation</h3>
-          <p>Complete POS database configuration, modifiers, staff permissions, payment terminal setup, and manager training.</p>
-        </article>
-
-        <article class="service-card hospitality-card">
-          <div class="card-icon">📑</div>
-          <h3>SOPs & Operational Audits</h3>
-          <p>Comprehensive site reviews, floor flow optimization, service standards, and customized operating procedure manuals.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Computer Vision Spotlight -->
-  <section id="gemini-intro" class="software-section">
-    <div class="container">
-      <h2>Computer Vision Lab</h2>
-      <p class="section-subtitle">
-        Upload an image and let our AI detect objects, faces, and motion in real-time. Explore our detection models built on OpenCV, Roboflow, and Google AI.
-      </p>
-      <a href="https://klhcomputervision.streamlit.app/" target="_blank" class="btn-primary">Try the App</a>
-    </div>
-  </section>
-
-  <!-- KLH Labs -->
-  <section id="labs" class="software-section">
-    <div class="container">
-      <h2>KLH Labs</h2>
-      <p class="section-subtitle">Ideas in motion — our experiments & software projects.</p>
-
-      <div class="software-grid">
-        <article class="software-card">
-          <img src="images/KLHPOS.png" alt="KLHPOS System Logo" loading="lazy">
-          <h3>KLHPOS</h3>
-          <p>A streamlined, modern point-of-sale system designed for small businesses and clubs.</p>
-          <a href="https://klhcannabis.web.app" target="_blank" class="btn-primary">View Project</a>
-        </article>
-
-        <article class="software-card">
-          <img src="images/12nibbles.jpg" alt="Munch Game Screenshot" loading="lazy">
-          <h3>Munch (Retro Game)</h3>
-          <p>A modern remake of classic arcade games — play it in your browser, download to your phone.</p>
-          <a href="https://klh-retro-arcade.web.app" target="_blank" class="btn-primary">Play Munch</a>
-        </article>
-
-        <article class="software-card">
-          <img src="https://klh-la-duree.onrender.com/static/images/logo2.jpg" alt="La Duree Logo" loading="lazy" style="border-radius: 8px;">
-          <h3>Online Store</h3>
-          <p>Full-stack e-commerce website with shopping cart, sessions, and checkout. Built with Flask (Python) + deployed on Render.com.</p>
-          <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="https://klh-la-duree.onrender.com" target="_blank" class="btn-primary">Flask Store →</a>
-            <a href="https://klhart-95f47.web.app" target="_blank" class="btn-primary" style="background-color: #4285f4;">Firebase Store →</a>
+          <div class="hero-actions">
+            <a href="#work" class="btn-primary">See what we're building →</a>
+            <a href="#contact" class="btn-text">Start a conversation</a>
           </div>
-        </article>
-      </div>
-    </div>
-  </section>
 
-  <!-- AI Playground -->
-  <section id="playground" class="software-section">
-    <div class="container">
-      <h2>AI Playground</h2>
-      <p class="section-subtitle">Explore our live AI demos, LLM experiments, and API-driven tools in action.</p>
-
-      <div class="software-grid">
-        <article class="software-card">
-          <img src="images/ailogo.jpg" alt="KLH AI Portal Logo" loading="lazy">
-          <h3>KLH AI Portal</h3>
-          <p>Interact with our collection of AI-powered demos, including chatbots, content generation, and data tools.</p>
-          <a href="https://klhinnovationai.streamlit.app/" target="_blank" class="btn-primary">Launch Playground</a>
-        </article>
-
-        <article class="software-card">
-          <img src="images/ailogo.jpg" alt="Computer Vision Lab" loading="lazy">
-          <h3>Computer Vision Lab</h3>
-          <p>Live object detection, face detection, and motion analysis powered by OpenCV, Roboflow, and Google Gemini.</p>
-          <a href="https://klhcomputervision.streamlit.app/" target="_blank" class="btn-primary">Open CV Lab</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="pricing" class="pricing-section">
-    <div class="container">
-      <h2>Clear, Transparent Pricing</h2>
-      <p class="section-subtitle">No hidden fees. Upfront deliverables scoped for Web Development or Hospitality Operations.</p>
-
-      <div class="pricing-grid">
-
-        <article class="pricing-card">
-          <div class="pricing-header">
-            <h3>Starter Scope</h3>
-            <div class="pricing-price">From <span>R1 500</span></div>
+          <div class="hero-note">
+            <span></span>
+            South Africa · Working with ambitious small businesses
           </div>
-          <p class="pricing-focus">Ideal for single landing pages OR targeted audit setups.</p>
-          <ul class="pricing-features">
-            <li><strong>Digital:</strong> Single-page website or landing page with contact form & basic SEO</li>
-            <li><strong>Hospitality:</strong> Targeted menu costing OR stock control workflow audit</li>
-            <li>✓ Delivered in 5–7 days</li>
-            <li>✓ 1 revision round included</li>
-          </ul>
-          <a href="#contact" class="btn-secondary">Get Started</a>
-        </article>
+        </div>
 
-        <article class="pricing-card pricing-featured">
-          <div class="pricing-badge">Most Popular</div>
-          <div class="pricing-header">
-            <h3>Professional Scope</h3>
-            <div class="pricing-price">From <span>R8 500</span></div>
+        <div class="hero-panel">
+          <div class="panel-label">THE KLH APPROACH</div>
+          <div class="panel-line">
+            <span>01</span>
+            <strong>Find the problem.</strong>
           </div>
-          <p class="pricing-focus">Ideal for complete websites OR full POS & Ops setup.</p>
-          <ul class="pricing-features">
-            <li><strong>Digital:</strong> Multi-page website, Web App, AI API integration & branding</li>
-            <li><strong>Hospitality:</strong> Full POS database setup, full menu costing & SOP manual build</li>
-            <li>✓ Delivered in 10–14 days</li>
-            <li>✓ 2 revision rounds included</li>
-          </ul>
-          <a href="#contact" class="btn-primary">Get Started</a>
-        </article>
-
-        <article class="pricing-card">
-          <div class="pricing-header">
-            <h3>Enterprise / Retainer</h3>
-            <div class="pricing-price">Let's <span>Talk</span></div>
+          <div class="panel-line">
+            <span>02</span>
+            <strong>Strip away the noise.</strong>
           </div>
-          <p class="pricing-focus">For ongoing multi-phase digital builds or active ops management.</p>
-          <ul class="pricing-features">
-            <li>✓ Custom web app development & dedicated maintenance</li>
-            <li>✓ Monthly Cost-of-Sales reporting & ongoing stock variance monitoring</li>
-            <li>✓ Multi-outlet franchise documentation & systems design</li>
-            <li>✓ Free discovery consultation call</li>
-          </ul>
-          <a href="#contact" class="btn-secondary">Book a Call</a>
-        </article>
-
+          <div class="panel-line">
+            <span>03</span>
+            <strong>Build something useful.</strong>
+          </div>
+          <div class="panel-line">
+            <span>04</span>
+            <strong>Make it work in the real world.</strong>
+          </div>
+          <div class="panel-footer">Simple. Honest. Built for the Hustle.</div>
+        </div>
       </div>
+    </section>
 
-      <p class="pricing-note">All prices in ZAR. International clients welcome — USD/EUR invoicing available.</p>
-    </div>
-  </section>
+    <!-- PROBLEM / POSITIONING -->
+    <section class="statement-section">
+      <div class="container statement-grid">
+        <p class="statement-kicker">NOT ANOTHER DIGITAL AGENCY</p>
+        <div>
+          <h2>Technology should solve something.</h2>
+          <p>
+            KLH combines hands-on business experience with web development,
+            automation and AI. The goal isn't to add technology for its own sake.
+            It's to make a process clearer, faster, cheaper or simply better.
+          </p>
+        </div>
+      </div>
+    </section>
 
-  <!-- Blog -->
-  <section id="blog" class="blog-section">
-    <div class="container">
-      <h2>A Thing With Wings</h2>
-      <p class="section-subtitle">Philosophy, design, structure, integrity & meaning-making.</p>
+    <!-- WORK -->
+    <section id="work" class="work-section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">SELECTED WORK</span>
+            <h2>Things we're building.</h2>
+          </div>
+          <p>
+            Real projects, experiments and systems — from hospitality operations
+            to AI, computer vision and web products.
+          </p>
+        </div>
 
-      <img src="images/atwwlogo.jpg" alt="Blog Logo: A Thing With Wings" class="blog-logo" loading="lazy">
+        <div class="project-grid">
 
-      <a href="https://athingwithwingsbyklh.wordpress.com" target="_blank" class="btn-primary">
-        Visit the Blog
-      </a>
-    </div>
-  </section>
+          <article class="project-card project-featured">
+            <div class="project-image">
+              <img src="images/KLHPOS.png" alt="KLHPOS system">
+              <span class="project-number">01</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">PRODUCT / HOSPITALITY</div>
+              <h3>KLHPOS</h3>
+              <p>
+                A practical point-of-sale system designed around the realities
+                of small businesses and clubs.
+              </p>
+              <a href="https://klhcannabis.web.app" target="_blank" rel="noopener" class="project-link">View project →</a>
+            </div>
+          </article>
 
-  <!-- About -->
-  <section id="about" class="about">
-    <div class="container">
-      <h2>Who We Are</h2>
-      <p>
-        KLH Innovation is a dual-capability studio based in South Africa.  
-        We combine design, philosophy, and engineering to build meaningful digital experiences, while providing deep, practical operations consulting for the hospitality industry — structurally, strategically, and financially.
-      </p>
-    </div>
-  </section>
+          <article class="project-card">
+            <div class="project-image">
+              <img src="images/ailogo.jpg" alt="KLH AI Portal">
+              <span class="project-number">02</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">AI / EXPERIMENTATION</div>
+              <h3>KLH AI Portal</h3>
+              <p>
+                A growing collection of AI-powered tools, experiments,
+                assistants and data workflows.
+              </p>
+              <a href="https://klhinnovationai.streamlit.app/" target="_blank" rel="noopener" class="project-link">Launch portal →</a>
+            </div>
+          </article>
 
-  <!-- Testimonials -->
-  <section id="testimonials" class="testimonials">
-    <div class="container">
-      <h2>Client Feedback</h2>
-      <blockquote>
-        "KLH redesigned our website and we saw a 60% increase in client inquiries."
-        <cite>— Legal Firm, Johannesburg</cite>
-      </blockquote>
-    </div>
-  </section>
+          <article class="project-card">
+            <div class="project-image">
+              <img src="images/ailogo.jpg" alt="KLH Computer Vision Lab">
+              <span class="project-number">03</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">COMPUTER VISION / AI</div>
+              <h3>Computer Vision Lab</h3>
+              <p>
+                Experiments with object detection, OCR, emotion recognition
+                and AI-assisted visual analysis.
+              </p>
+              <a href="https://klhcomputervision.streamlit.app/" target="_blank" rel="noopener" class="project-link">Open the lab →</a>
+            </div>
+          </article>
 
-  <!-- Contact -->
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <h2>Contact Us</h2>
-      <p>Have a digital or hospitality project in mind? Let's talk.</p>
+          <article class="project-card">
+            <div class="project-image">
+              <img src="images/12nibbles.jpg" alt="Munch retro game">
+              <span class="project-number">04</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">WEB / EXPERIMENT</div>
+              <h3>Munch</h3>
+              <p>
+                A browser-based retro arcade experiment built as a small,
+                playful digital product.
+              </p>
+              <a href="https://klh-retro-arcade.web.app" target="_blank" rel="noopener" class="project-link">Play Munch →</a>
+            </div>
+          </article>
 
-      <form id="contact-form" novalidate>
-        <label for="service-type">Service Interested In*</label>
-        <select id="service-type" name="service-type" required style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ccc;">
-          <option value="webdev">Web Development / AI Systems</option>
-          <option value="hospitality">Hospitality Systems & Costings</option>
-          <option value="both">Both Digital & Hospitality</option>
-        </select>
+          <article class="project-card">
+            <div class="project-image">
+              <img src="https://klh-la-duree.onrender.com/static/images/logo2.jpg" alt="La Duree online store" loading="lazy">
+              <span class="project-number">05</span>
+            </div>
+            <div class="project-body">
+              <div class="project-meta">E-COMMERCE / PYTHON</div>
+              <h3>Online Store</h3>
+              <p>
+                Full-stack commerce work exploring carts, sessions, checkout
+                and deployment with Python and Firebase.
+              </p>
+              <div class="project-links">
+                <a href="https://klh-la-duree.onrender.com" target="_blank" rel="noopener" class="project-link">Flask store →</a>
+                <a href="https://klhart-95f47.web.app" target="_blank" rel="noopener" class="project-link">Firebase store →</a>
+              </div>
+            </div>
+          </article>
 
-        <label for="name">Name*</label>
-        <input type="text" id="name" name="name" required />
+        </div>
+      </div>
+    </section>
 
-        <label for="email">Email*</label>
-        <input type="email" id="email" name="_replyto" required />
+    <!-- SERVICES -->
+    <section id="services" class="services-section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">WHAT WE DO</span>
+            <h2>Build. Connect. Simplify.</h2>
+          </div>
+          <p>
+            Start with the problem, then choose the technology that actually
+            makes sense.
+          </p>
+        </div>
 
-        <label for="message">Message*</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+        <div class="service-list">
 
-        <button type="submit" class="btn-primary">Send Message</button>
-      </form>
+          <article class="service-row">
+            <span class="service-index">01</span>
+            <div>
+              <h3>Websites & Digital Systems</h3>
+              <p>
+                Responsive websites, dashboards, client portals, PWAs and
+                custom internal tools built around how your business works.
+              </p>
+            </div>
+            <span class="service-arrow">↗</span>
+          </article>
 
-      <div id="form-status" role="status"></div>
-    </div>
-  </section>
+          <article class="service-row">
+            <span class="service-index">02</span>
+            <div>
+              <h3>AI & Automation</h3>
+              <p>
+                AI integrations, APIs, document workflows, assistants and
+                automation that remove repetitive work and surface useful data.
+              </p>
+            </div>
+            <span class="service-arrow">↗</span>
+          </article>
 
-  <!-- Footer -->
+          <article class="service-row">
+            <span class="service-index">03</span>
+            <div>
+              <h3>Design & UX</h3>
+              <p>
+                Clear interfaces, landing pages, visual identity and user
+                experiences that make digital products easier to understand.
+              </p>
+            </div>
+            <span class="service-arrow">↗</span>
+          </article>
+
+          <article class="service-row">
+            <span class="service-index">04</span>
+            <div>
+              <h3>Business Systems</h3>
+              <p>
+                Turn messy spreadsheets, manual processes and disconnected
+                tools into workflows that people can actually use.
+              </p>
+            </div>
+            <span class="service-arrow">↗</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- HOSPITALITY -->
+    <section id="hospitality" class="hospitality-section">
+      <div class="container hospitality-grid">
+        <div class="hospitality-intro">
+          <span class="eyebrow">HOSPITALITY / OPERATIONS</span>
+          <h2>Technology is only useful if the operation works.</h2>
+          <p>
+            KLH brings practical hospitality operations experience together
+            with systems thinking — helping restaurants, bars and hospitality
+            businesses understand where money, stock and time are going.
+          </p>
+          <a href="#contact" class="btn-light">Talk about your operation →</a>
+        </div>
+
+        <div class="hospitality-services">
+          <div class="ops-item">
+            <span>01</span>
+            <div><strong>Menu Costing</strong><p>Recipes, yields, portions and contribution margins.</p></div>
+          </div>
+          <div class="ops-item">
+            <span>02</span>
+            <div><strong>Stock & Variance</strong><p>Inventory structures, waste logging and variance workflows.</p></div>
+          </div>
+          <div class="ops-item">
+            <span>03</span>
+            <div><strong>COS Analysis</strong><p>Cost-of-sales reporting and practical loss investigation.</p></div>
+          </div>
+          <div class="ops-item">
+            <span>04</span>
+            <div><strong>POS Implementation</strong><p>Configuration, permissions, products, modifiers and training.</p></div>
+          </div>
+          <div class="ops-item">
+            <span>05</span>
+            <div><strong>SOPs & Audits</strong><p>Operational reviews, documentation and repeatable standards.</p></div>
+          </div>
+          <div class="ops-item">
+            <span>06</span>
+            <div><strong>Bar Systems</strong><p>Layouts, beverage costing, pouring controls and workflow.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LABS -->
+    <section id="labs" class="labs-section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">KLH LABS</span>
+            <h2>Ideas in motion.</h2>
+          </div>
+          <p>
+            Not everything starts as a business. Some things start as a
+            question, an experiment or a weird idea worth building.
+          </p>
+        </div>
+
+        <div class="lab-strip">
+          <a href="https://klhinnovationai.streamlit.app/" target="_blank" rel="noopener" class="lab-tile">
+            <span>AI</span>
+            <strong>KLH AI</strong>
+            <small>Tools / Models / Experiments</small>
+          </a>
+
+          <a href="https://klhcomputervision.streamlit.app/" target="_blank" rel="noopener" class="lab-tile">
+            <span>VISION</span>
+            <strong>Computer Vision</strong>
+            <small>Detection / OCR / Recognition</small>
+          </a>
+
+          <a href="https://klhwords.streamlit.app/" target="_blank" rel="noopener" class="lab-tile">
+            <span>WORDS</span>
+            <strong>KLH Words</strong>
+            <small>Language / Linguistics / AI</small>
+          </a>
+
+          <a href="https://athingwithwingsbyklh.wordpress.com" target="_blank" rel="noopener" class="lab-tile">
+            <span>THOUGHT</span>
+            <strong>A Thing With Wings</strong>
+            <small>Philosophy / Meaning / Writing</small>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="pricing-section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">STARTING POINTS</span>
+            <h2>Clear scope. Clear pricing.</h2>
+          </div>
+          <p>
+            These are starting points, not rigid packages. Larger systems are
+            scoped around the actual problem.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+
+          <article class="pricing-card">
+            <span class="pricing-label">01 / STARTER</span>
+            <h3>Focused</h3>
+            <div class="pricing-price">From <strong>R1 500</strong></div>
+            <p>For one clearly defined problem or a small digital deliverable.</p>
+            <ul>
+              <li>Landing page or targeted audit</li>
+              <li>Basic SEO / workflow recommendations</li>
+              <li>5–7 day target delivery</li>
+              <li>1 revision round</li>
+            </ul>
+            <a href="#contact" class="btn-secondary">Start here →</a>
+          </article>
+
+          <article class="pricing-card pricing-featured">
+            <span class="pricing-label">02 / PROFESSIONAL</span>
+            <h3>Build</h3>
+            <div class="pricing-price">From <strong>R8 500</strong></div>
+            <p>For a complete website, system or substantial hospitality setup.</p>
+            <ul>
+              <li>Multi-page website or web application</li>
+              <li>AI/API integration where appropriate</li>
+              <li>POS, costing or SOP system work</li>
+              <li>10–14 day target delivery</li>
+              <li>2 revision rounds</li>
+            </ul>
+            <a href="#contact" class="btn-primary">Discuss a build →</a>
+          </article>
+
+          <article class="pricing-card">
+            <span class="pricing-label">03 / ONGOING</span>
+            <h3>Partner</h3>
+            <div class="pricing-price"><strong>Let's talk</strong></div>
+            <p>For businesses that need continued development, systems or operational support.</p>
+            <ul>
+              <li>Custom web systems</li>
+              <li>Maintenance and iteration</li>
+              <li>Ongoing operational analysis</li>
+              <li>Multi-outlet systems and documentation</li>
+            </ul>
+            <a href="#contact" class="btn-secondary">Talk to KLH →</a>
+          </article>
+
+        </div>
+
+        <p class="pricing-note">All prices in ZAR. International clients welcome — USD/EUR invoicing available.</p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-section">
+      <div class="container about-grid">
+        <div>
+          <span class="eyebrow">WHY KLH</span>
+          <h2>Built from both sides of the counter.</h2>
+        </div>
+        <div>
+          <p class="about-lead">
+            KLH Innovation is a South African digital studio combining design,
+            engineering, AI experimentation and practical business experience.
+          </p>
+          <p>
+            The work sits somewhere between a web studio, a product lab and an
+            operations consultancy. That combination matters: good software
+            needs to understand the people and processes using it.
+          </p>
+          <p>
+            No unnecessary complexity. No technology theatre. Build what is
+            useful, learn from it, and improve it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <span class="eyebrow">HAVE A PROBLEM?</span>
+          <h2>Let's build something useful.</h2>
+          <p>
+            Tell me what you're trying to fix, build or understand. It doesn't
+            need to be a perfect brief.
+          </p>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <label for="service-type">What do you need?*</label>
+          <select id="service-type" name="service-type" required>
+            <option value="webdev">Website / Digital System</option>
+            <option value="ai">AI / Automation</option>
+            <option value="hospitality">Hospitality Systems / Costing</option>
+            <option value="both">A combination</option>
+            <option value="other">Not sure yet</option>
+          </select>
+
+          <label for="name">Name*</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="email">Email*</label>
+          <input type="email" id="email" name="_replyto" required />
+
+          <label for="message">Tell me about it*</label>
+          <textarea id="message" name="message" rows="6" required placeholder="What's the problem, idea or project?"></textarea>
+
+          <button type="submit" class="btn-primary">Send it →</button>
+          <div id="form-status" role="status"></div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
   <footer>
-    <div class="container">
-      <p>© 2025 KLH Innovation. All rights reserved.</p>
+    <div class="container footer-inner">
+      <div>
+        <img src="images/newklh.webp" alt="KLH Innovation Logo" class="footer-logo">
+        <p>Simple. Honest. Built for the Hustle.</p>
+      </div>
+      <p>© 2026 KLH Innovation. All rights reserved.</p>
     </div>
   </footer>
 
