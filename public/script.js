@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
 
       const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.textContent : 'Send it →';
+
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
@@ -41,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Message';
+          submitBtn.textContent = originalText;
         }
       }
     });
@@ -62,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hamburger.addEventListener('click', toggleMenu);
 
-    // Keyboard navigation support for hamburger
     hamburger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -74,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============================
      SMOOTH SCROLL & AUTO-SELECT
   ============================ */
-  // Handles internal anchors for navigation links, hero buttons, and pricing CTAs
   const internalLinks = document.querySelectorAll('a[href^="#"]');
   const serviceSelect = document.getElementById('service-type');
 
@@ -88,23 +88,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetElement) {
           e.preventDefault();
 
-          // Smooth scroll to target
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-          // Auto-select service in contact form if coming from a specific context
+          // Auto-select dropdown based on clicked context
           if (serviceSelect && targetId === '#contact') {
-            const parentCard = link.closest('.pricing-card, .service-card, .hero-split');
+            const parentCard = link.closest('.pricing-card, .service-row, .hero-copy, .hospitality-intro');
             if (parentCard) {
               const cardText = parentCard.textContent.toLowerCase();
-              if (cardText.includes('hospitality') || cardText.includes('ops')) {
+              if (cardText.includes('hospitality') || cardText.includes('costing') || cardText.includes('ops')) {
                 serviceSelect.value = 'hospitality';
-              } else if (cardText.includes('web') || cardText.includes('ai') || cardText.includes('digital')) {
+              } else if (cardText.includes('ai') && cardText.includes('web')) {
+                serviceSelect.value = 'both';
+              } else if (cardText.includes('ai')) {
+                serviceSelect.value = 'ai';
+              } else if (cardText.includes('web') || cardText.includes('digital')) {
                 serviceSelect.value = 'webdev';
               }
             }
           }
 
-          // Close mobile menu if open
+          // Close mobile menu
           if (nav && nav.classList.contains('open')) {
             nav.classList.remove('open');
             if (hamburger && hamburger.classList.contains('open')) {
